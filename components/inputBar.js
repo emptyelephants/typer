@@ -13,12 +13,13 @@ const checkSpace = (
   setCorrect,
   handleLetterAccuracy,
 ) => {
-  const letterIndex = userWord.legth - 1;
+  const letterIndex = userWord.length - 1;
 
   // ignore on empty word
   if (userWord[0] === ' ') {
     return '';
   }
+
   // handle next word, check for correctness
   if (userWord[letterIndex] === ' ') {
     incrementWordIndex();
