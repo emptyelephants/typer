@@ -14,35 +14,82 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 var _jsxFileName = "/Users/migueltrinidad/Play/typer/components/inputBar.js";
+ // e.target.value,
+// incrementWordIndex,
+// currentWord,
+// setCorrect,
+// handleLetterAccuracy,
+
+var checkSpace = function checkSpace(userWord, incrementWordIndex, currentWord, setCorrect, handleLetterAccuracy) {
+  var letterIndex = userWord.legth - 1; // ignore on empty word
+
+  if (userWord[0] === ' ') {
+    return '';
+  } // handle next word, check for correctness
 
 
-var handleNextWord = function handleNextWord(word) {
-  return word[word.length - 1] === ' ' ? '' : word;
+  if (userWord[letterIndex] === ' ') {
+    incrementWordIndex();
+    setCorrect(userWord.slice(0, letterIndex) === currentWord);
+    return '';
+  } // if the letter was correect
+
+
+  if (userWord[letterIndex] === currentWord[letterIndex]) {
+    return userWord;
+  } // if the letter was wrong
+
+
+  if (userWord[letterIndex] !== currentWord[letterIndex]) {
+    handleLetterAccuracy();
+    return userWord;
+  }
+
+  return userWord;
 };
 
-var InputBar = function InputBar() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(),
-      _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
-      name = _useState2[0],
-      setName = _useState2[1];
+var InputBar = function InputBar(props) {
+  var currentWord = props.currentWord,
+      incrementWordIndex = props.incrementWordIndex,
+      handleLetterAccuracy = props.handleLetterAccuracy,
+      wasCorrect = props.wasCorrect,
+      setCorrect = props.setCorrect;
 
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
+      _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+      userWord = _useState2[0],
+      setUserWord = _useState2[1];
+
+  var letterIndex = userWord.length;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 9
+      lineNumber: 53
     },
     __self: this
-  }, name), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  }, "letter index", " ".concat(letterIndex)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 57
+    },
+    __self: this
+  }, "the current is", " ".concat(currentWord)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
     onChange: function onChange(e) {
-      return setName(handleNextWord(e.target.value));
+      return setUserWord(checkSpace(e.target.value, incrementWordIndex, currentWord, setCorrect, handleLetterAccuracy));
     },
-    value: name,
+    value: userWord,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 10
+      lineNumber: 61
     },
     __self: this
-  }));
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 71
+    },
+    __self: this
+  }, wasCorrect && 'correct'));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (InputBar);
@@ -1426,40 +1473,91 @@ module.exports = (__webpack_require__(/*! dll-reference dll_7aff549c98b978433226
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_inputBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/inputBar */ "./components/inputBar.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_inputBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/inputBar */ "./components/inputBar.js");
+
 var _jsxFileName = "/Users/migueltrinidad/Play/typer/pages/index.js";
+
+
+/* eslint-disable func-names */
+ // import fetch from 'isomorphic-unfetch';
 
 
 
 var Index = function Index() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  // stringfy total words, grab total letters then (total - accuracy)/(total)
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0),
+      _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+      wordIndex = _useState2[0],
+      _incrementWordIndex = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(),
+      _useState4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState3, 2),
+      wasCorrect = _useState4[0],
+      _setCorrect = _useState4[1];
+
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0),
+      _useState6 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState5, 2),
+      wrongLetters = _useState6[0],
+      incrementWrongLetters = _useState6[1];
+
+  var words = ['dog', 'cat', 'test', 'west'];
+  var currentWord = words[wordIndex];
+  console.log('current' + wasCorrect);
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 5
+      lineNumber: 18
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 6
+      lineNumber: 19
     },
     __self: this
-  }, "hello world"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_inputBar__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, "Typer"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_inputBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    currentWord: currentWord,
+    incrementWordIndex: function incrementWordIndex() {
+      return _incrementWordIndex(wordIndex + 1);
+    },
+    handleLetterAccuracy: function handleLetterAccuracy() {
+      return incrementWrongLetters(wrongLetters + 1);
+    },
+    wasCorrect: wasCorrect,
+    setCorrect: function setCorrect(e) {
+      return _setCorrect(e);
+    },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 7
+      lineNumber: 20
     },
     __self: this
-  }));
-};
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 27
+    },
+    __self: this
+  }, "that was right") && wasCorrect, "wrong letters ".concat(wrongLetters));
+}; // Index.getInitialProps = async function () {
+//   const wordsApiKey = process.env.WORDS_API_KEY;
+//   const wordsApiBaseUrl = 'https://random-word-api.herokuapp.com';
+//   const res = await fetch(`${wordsApiBaseUrl}/word?key=${wordsApiKey}&number=${200}`);
+//   const words = await res.json();
+//   return {
+//     words,
+//   };
+// };
+
 
 /* harmony default export */ __webpack_exports__["default"] = (Index);
 
 /***/ }),
 
-/***/ 0:
+/***/ 1:
 /*!****************************************************************************************************************************!*\
   !*** multi next-client-pages-loader?page=%2F&absolutePagePath=%2FUsers%2Fmigueltrinidad%2FPlay%2Ftyper%2Fpages%2Findex.js ***!
   \****************************************************************************************************************************/
@@ -1482,5 +1580,5 @@ module.exports = dll_7aff549c98b978433226;
 
 /***/ })
 
-},[[0,"static/runtime/webpack.js"]]]);
+},[[1,"static/runtime/webpack.js"]]]);
 //# sourceMappingURL=index.js.map
