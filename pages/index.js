@@ -1,23 +1,26 @@
 /* eslint-disable func-names */
 import { useState } from 'react';
-// import fetch from 'isomorphic-unfetch';
+import styled from 'styled-components';
 
 import InputBar from '../components/inputBar';
 import WordsDisplay from '../components/wordsDisplay';
 
-import words from '../words';
+import allWords from '../words';
 
-const Index = () => {
+const Index = (props) => {
+
+  const { words } = props;
   const [wordIndex, incrementWordIndex] = useState(0);
   const [userLetters, setUserLetters] = useState(12);
   const [wrongLetters, setWrongLetters] = useState(0);
   const [incorrectWords, setIncorrect] = useState([]);
 
-  const shortword = words.slice(100, 110);
+  // user set ammount of words;
+  const shortword = words.slice(0, 20);
   const currentWord = shortword[wordIndex];
 
   return (
-    <>
+    <GameContainer>
       <h1>Typer</h1>
       <div>
         <WordsDisplay
@@ -38,20 +41,24 @@ const Index = () => {
         <br />
         {`your accuracy is  ${((userLetters - wrongLetters) / userLetters) * 100}%`}
       </div>
-    </>
+    </GameContainer>
   );
 };
 
-// todo: fetch words from api
-// Index.getInitialProps = async function () {
-//   const wordsApiKey = process.env.WORDS_API_KEY;
-//   const wordsApiBaseUrl = 'https://random-word-api.herokuapp.com';
-//   const res = await fetch(`${wordsApiBaseUrl}/word?key=${wordsApiKey}&number=${200}`);
-//   const words = await res.json();
+const GameContainer = styled.div`
+  text-align:center;
+  max-width:1440px;
+  margin:auto;
+`;
 
-//   return {
-//     words,
-//   };
-// };
+// all available words to play with
+Index.getInitialProps = async function () {
+  allWords.sort(() => Math.random() - 0.2);
+  const words = allWords.slice(0, 1000);
+
+  return {
+    words,
+  };
+};
 
 export default Index;

@@ -1,4 +1,4 @@
-const words = [
+const allWords = [
   'abandon',
   'abash',
   'abate',
@@ -3092,4 +3092,4 @@ const words = [
   'zonked',
 ];
 
-export default words;
+export default allWords;

@@ -25,8 +25,7 @@ const WordDisplay = (props) => {
 const WordState = styled.span`
   color: ${props => (props.wasWrong ? 'red' : 'green')};
   color: ${props => (props.current ? 'purple' : '')};
-  color: ${props => (props.upComing ? 'black !important' : '')};
-
+  color: ${props => (props.upComing ? 'black' : '')};
   display:inline-block;
   margin-right:0.7em;
 `;
