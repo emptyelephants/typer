@@ -39,7 +39,7 @@ const Index = (props) => {
           decrementUserLetters={() => setUserLetters(userLetters - 1)}
         />
         <br />
-        {`your accuracy is  ${((userLetters - wrongLetters) / userLetters) * 100}%`}
+        {`your accuracy is  ${(((userLetters - wrongLetters) / userLetters) * 100).toFixed(0)}%`}
       </div>
     </GameContainer>
   );
