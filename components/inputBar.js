@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 
-// e.target.value,
-// incrementWordIndex,
-// currentWord,
-// setCorrect,
-// handleLetterAccuracy,
-
-const checkSpace = (
+const checkLetter = (
   userWord,
   incrementWordIndex,
   currentWord,
-  setCorrect,
-  handleLetterAccuracy,
+  incrementWrongLetters,
+  incrementUserLetters,
+  updateIncorrect,
+  wordIndex,
 ) => {
   const letterIndex = userWord.length - 1;
 
@@ -23,55 +19,60 @@ const checkSpace = (
   // handle next word, check for correctness
   if (userWord[letterIndex] === ' ') {
     incrementWordIndex();
-    setCorrect(userWord.slice(0, letterIndex) === currentWord);
+    if (userWord.trim() !== currentWord) {
+      updateIncorrect(wordIndex);
+    }
     return '';
   }
   // if the letter was correect
   if (userWord[letterIndex] === currentWord[letterIndex]) {
+    incrementUserLetters();
     return userWord;
   }
   // if the letter was wrong
   if (userWord[letterIndex] !== currentWord[letterIndex]) {
-    handleLetterAccuracy();
+    incrementWrongLetters();
+    incrementUserLetters();
     return userWord;
   }
   return userWord;
 };
 
+const handleBackspace = (e, decrementUserLetters) => {
+  if (e.key === 'Backspace') {
+    decrementUserLetters();
+  }
+};
+
 const InputBar = (props) => {
   const {
     currentWord,
+    wordIndex,
     incrementWordIndex,
-    handleLetterAccuracy,
-    wasCorrect,
-    setCorrect,
+    incrementWrongLetters,
+    updateIncorrect,
+    incrementUserLetters,
+    decrementUserLetters,
   } = props;
+
   const [userWord, setUserWord] = useState('');
 
-  const letterIndex = userWord.length;
   return (
     <>
-      <p>
-        letter index
-        {` ${letterIndex}`}
-      </p>
-      <p>
-        the current is
-        {` ${currentWord}`}
-      </p>
       <input
-        onChange={e => setUserWord(checkSpace(
+        className={userWord === currentWord.slice(0, userWord.length) ? '' : 'inputWrong'}
+        onChange={e => setUserWord(checkLetter(
           e.target.value,
           incrementWordIndex,
           currentWord,
-          setCorrect,
-          handleLetterAccuracy,
+          incrementWrongLetters,
+          incrementUserLetters,
+          updateIncorrect,
+          wordIndex,
         ))}
+        onKeyDown={e => handleBackspace(e, decrementUserLetters)}
         value={userWord}
       />
-      <p>
-        {wasCorrect && 'correct'}
-      </p>
     </>
   );
 };

@@ -107,13 +107,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
 
 var _jsxFileName = "/Users/migueltrinidad/Play/typer/components/inputBar.js";
- // e.target.value,
-// incrementWordIndex,
-// currentWord,
-// setCorrect,
-// handleLetterAccuracy,
 
-var checkSpace = function checkSpace(userWord, incrementWordIndex, currentWord, setCorrect, handleLetterAccuracy) {
+
+var checkLetter = function checkLetter(userWord, incrementWordIndex, currentWord, incrementWrongLetters, incrementUserLetters, updateIncorrect, wordIndex) {
   var letterIndex = userWord.length - 1; // ignore on empty word
 
   if (userWord[0] === ' ') {
@@ -123,52 +119,57 @@ var checkSpace = function checkSpace(userWord, incrementWordIndex, currentWord, 
 
   if (userWord[letterIndex] === ' ') {
     incrementWordIndex();
-    setCorrect(userWord.slice(0, letterIndex) === currentWord);
+
+    if (userWord.trim() !== currentWord) {
+      updateIncorrect(wordIndex);
+    }
+
     return '';
   } // if the letter was correect
 
 
   if (userWord[letterIndex] === currentWord[letterIndex]) {
+    incrementUserLetters();
     return userWord;
   } // if the letter was wrong
 
 
   if (userWord[letterIndex] !== currentWord[letterIndex]) {
-    handleLetterAccuracy();
+    incrementWrongLetters();
+    incrementUserLetters();
     return userWord;
   }
 
   return userWord;
 };
 
+var handleBackspace = function handleBackspace(e, decrementUserLetters) {
+  if (e.key === 'Backspace') {
+    decrementUserLetters();
+  }
+};
+
 var InputBar = function InputBar(props) {
   var currentWord = props.currentWord,
+      wordIndex = props.wordIndex,
       incrementWordIndex = props.incrementWordIndex,
-      handleLetterAccuracy = props.handleLetterAccuracy,
-      wasCorrect = props.wasCorrect,
-      setCorrect = props.setCorrect;
+      incrementWrongLetters = props.incrementWrongLetters,
+      updateIncorrect = props.updateIncorrect,
+      incrementUserLetters = props.incrementUserLetters,
+      decrementUserLetters = props.decrementUserLetters;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
       _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
       userWord = _useState2[0],
       setUserWord = _useState2[1];
 
-  var letterIndex = userWord.length;
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 54
-    },
-    __self: this
-  }, "letter index", " ".concat(letterIndex)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 58
-    },
-    __self: this
-  }, "the current is", " ".concat(currentWord)), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    className: userWord === currentWord.slice(0, userWord.length) ? '' : 'inputWrong',
     onChange: function onChange(e) {
-      return setUserWord(checkSpace(e.target.value, incrementWordIndex, currentWord, setCorrect, handleLetterAccuracy));
+      return setUserWord(checkLetter(e.target.value, incrementWordIndex, currentWord, incrementWrongLetters, incrementUserLetters, updateIncorrect, wordIndex));
+    },
+    onKeyDown: function onKeyDown(e) {
+      return handleBackspace(e, decrementUserLetters);
     },
     value: userWord,
     __source: {
@@ -176,13 +177,7 @@ var InputBar = function InputBar(props) {
       lineNumber: 62
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 72
-    },
-    __self: this
-  }, wasCorrect && 'correct'));
+  }));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (InputBar);
@@ -200,32 +195,21 @@ var InputBar = function InputBar(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
 var _jsxFileName = "/Users/migueltrinidad/Play/typer/components/wordsDisplay.js";
 
 
-var handleWordClass = function handleWordClass(mapIndex, wordIndex, wasCorrect) {
-  var theClassName = '';
 
-  if (mapIndex === wordIndex) {
-    theClassName += 'current ';
-  }
-
-  console.log('this bool ' + wasCorrect);
-
-  if (!wasCorrect) {
-    theClassName += 'wrong ';
-  }
-
-  return theClassName;
-};
-
-var wordsAssembler = function wordsAssembler(words, wordIndex, wasCorrect) {
+var wordsAssembler = function wordsAssembler(words, wordIndex, incorrectWords) {
   return words.map(function (word, index) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-      className: handleWordClass(index, wordIndex, wasCorrect),
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WordState, {
+      current: wordIndex === index,
+      wasWrong: wordIndex > index && incorrectWords.includes(index),
+      upComing: wordIndex < index,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 17
+        lineNumber: 5
       },
       __self: this
     }, word);
@@ -233,21 +217,41 @@ var wordsAssembler = function wordsAssembler(words, wordIndex, wasCorrect) {
 };
 
 var WordDisplay = function WordDisplay(props) {
-  console.log(props);
   var words = props.words,
       wordIndex = props.wordIndex,
-      wasCorrect = props.wasCorrect;
-  var allWords = wordsAssembler(words, wordIndex, wasCorrect);
+      incorrectWords = props.incorrectWords;
+  var allWords = wordsAssembler(words, wordIndex, incorrectWords);
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 19
     },
     __self: this
   }, allWords);
 };
 
+var WordState = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.span.withConfig({
+  displayName: "wordsDisplay__WordState",
+  componentId: "sc-15txsww-0"
+})(["color:", ";color:", ";color:", ";display:inline-block;margin-right:0.7em;"], function (props) {
+  return props.wasWrong ? 'red' : 'green';
+}, function (props) {
+  return props.current ? 'purple' : '';
+}, function (props) {
+  return props.upComing ? 'black !important' : '';
+});
 /* harmony default export */ __webpack_exports__["default"] = (WordDisplay);
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/array/from.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/array/from.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/array/from */ "core-js/library/fn/array/from");
 
 /***/ }),
 
@@ -273,6 +277,17 @@ module.exports = __webpack_require__(/*! core-js/library/fn/get-iterator */ "cor
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/is-iterable */ "core-js/library/fn/is-iterable");
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithHoles.js":
 /*!***************************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithHoles.js ***!
@@ -288,6 +303,53 @@ __webpack_require__.r(__webpack_exports__);
 
 function _arrayWithHoles(arr) {
   if (_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0___default()(arr)) return arr;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _arrayWithoutHoles; });
+/* harmony import */ var _core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core-js/array/is-array */ "./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js");
+/* harmony import */ var _core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0__);
+
+function _arrayWithoutHoles(arr) {
+  if (_core_js_array_is_array__WEBPACK_IMPORTED_MODULE_0___default()(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _iterableToArray; });
+/* harmony import */ var _core_js_array_from__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core-js/array/from */ "./node_modules/@babel/runtime-corejs2/core-js/array/from.js");
+/* harmony import */ var _core_js_array_from__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_core_js_array_from__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core-js/is-iterable */ "./node_modules/@babel/runtime-corejs2/core-js/is-iterable.js");
+/* harmony import */ var _core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function _iterableToArray(iter) {
+  if (_core_js_is_iterable__WEBPACK_IMPORTED_MODULE_1___default()(Object(iter)) || Object.prototype.toString.call(iter) === "[object Arguments]") return _core_js_array_from__WEBPACK_IMPORTED_MODULE_0___default()(iter);
 }
 
 /***/ }),
@@ -349,6 +411,22 @@ function _nonIterableRest() {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _nonIterableSpread; });
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js ***!
@@ -371,6 +449,28 @@ function _slicedToArray(arr, i) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _toConsumableArray; });
+/* harmony import */ var _arrayWithoutHoles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayWithoutHoles */ "./node_modules/@babel/runtime-corejs2/helpers/esm/arrayWithoutHoles.js");
+/* harmony import */ var _iterableToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./iterableToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/iterableToArray.js");
+/* harmony import */ var _nonIterableSpread__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./nonIterableSpread */ "./node_modules/@babel/runtime-corejs2/helpers/esm/nonIterableSpread.js");
+
+
+
+function _toConsumableArray(arr) {
+  return Object(_arrayWithoutHoles__WEBPACK_IMPORTED_MODULE_0__["default"])(arr) || Object(_iterableToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(arr) || Object(_nonIterableSpread__WEBPACK_IMPORTED_MODULE_2__["default"])();
+}
+
+/***/ }),
+
 /***/ "./pages/index.js":
 /*!************************!*\
   !*** ./pages/index.js ***!
@@ -380,12 +480,14 @@ function _slicedToArray(arr, i) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_inputBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/inputBar */ "./components/inputBar.js");
-/* harmony import */ var _components_wordsDisplay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/wordsDisplay */ "./components/wordsDisplay.js");
-/* harmony import */ var _words__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../words */ "./words.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/toConsumableArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_inputBar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/inputBar */ "./components/inputBar.js");
+/* harmony import */ var _components_wordsDisplay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/wordsDisplay */ "./components/wordsDisplay.js");
+/* harmony import */ var _words__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../words */ "./words.js");
+
 
 var _jsxFileName = "/Users/migueltrinidad/Play/typer/pages/index.js";
 
@@ -398,70 +500,84 @@ var _jsxFileName = "/Users/migueltrinidad/Play/typer/pages/index.js";
 
 
 var Index = function Index() {
-  // stringfy total words, grab total letters then (total - accuracy)/(total)
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0),
-      _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(0),
+      _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState, 2),
       wordIndex = _useState2[0],
       _incrementWordIndex = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(true),
-      _useState4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState3, 2),
-      wasCorrect = _useState4[0],
-      _setCorrect = _useState4[1];
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(12),
+      _useState4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState3, 2),
+      userLetters = _useState4[0],
+      setUserLetters = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0),
-      _useState6 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState5, 2),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(0),
+      _useState6 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState5, 2),
       wrongLetters = _useState6[0],
-      incrementWrongLetters = _useState6[1];
+      setWrongLetters = _useState6[1];
 
-  var shortword = _words__WEBPACK_IMPORTED_MODULE_4__["default"].slice(0, 10);
+  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])([]),
+      _useState8 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState7, 2),
+      incorrectWords = _useState8[0],
+      setIncorrect = _useState8[1];
+
+  var shortword = _words__WEBPACK_IMPORTED_MODULE_5__["default"].slice(100, 110);
   var currentWord = shortword[wordIndex];
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 20
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+  return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_2___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("h1", {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 21
     },
     __self: this
-  }, "Typer"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_wordsDisplay__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, "Typer"), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 22
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_wordsDisplay__WEBPACK_IMPORTED_MODULE_4__["default"], {
     words: shortword,
     wordIndex: wordIndex,
-    wasCorrect: wasCorrect,
+    incorrectWords: incorrectWords,
     __source: {
       fileName: _jsxFileName,
       lineNumber: 23
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_inputBar__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_components_inputBar__WEBPACK_IMPORTED_MODULE_3__["default"], {
     currentWord: currentWord,
+    wordIndex: wordIndex,
     incrementWordIndex: function incrementWordIndex() {
       return _incrementWordIndex(wordIndex + 1);
     },
-    handleLetterAccuracy: function handleLetterAccuracy() {
-      return incrementWrongLetters(wrongLetters + 1);
+    incrementWrongLetters: function incrementWrongLetters() {
+      return setWrongLetters(wrongLetters + 1);
     },
-    wasCorrect: wasCorrect,
-    setCorrect: function setCorrect(bool) {
-      return _setCorrect(bool);
+    decrementWrongLetters: function decrementWrongLetters() {
+      return setWrongLetters(wrongLetters - 1);
+    },
+    updateIncorrect: function updateIncorrect(e) {
+      return setIncorrect([].concat(Object(_babel_runtime_corejs2_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__["default"])(incorrectWords), [e]));
+    },
+    incrementUserLetters: function incrementUserLetters() {
+      return setUserLetters(userLetters + 1);
+    },
+    decrementUserLetters: function decrementUserLetters() {
+      return setUserLetters(userLetters - 1);
     },
     __source: {
       fileName: _jsxFileName,
       lineNumber: 28
     },
     __self: this
-  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+  }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement("br", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 35
+      lineNumber: 38
     },
     __self: this
-  }, "that was right") && wasCorrect, "wrong letters ".concat(wrongLetters));
-}; // Index.getInitialProps = async function () {
+  }), "your accuracy is  ".concat((userLetters - wrongLetters) / userLetters * 100, "%")));
+}; // todo: fetch words from api
+// Index.getInitialProps = async function () {
 //   const wordsApiKey = process.env.WORDS_API_KEY;
 //   const wordsApiBaseUrl = 'https://random-word-api.herokuapp.com';
 //   const res = await fetch(`${wordsApiBaseUrl}/word?key=${wordsApiKey}&number=${200}`);
@@ -502,6 +618,17 @@ module.exports = __webpack_require__(/*! /Users/migueltrinidad/Play/typer/pages/
 
 /***/ }),
 
+/***/ "core-js/library/fn/array/from":
+/*!************************************************!*\
+  !*** external "core-js/library/fn/array/from" ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/array/from");
+
+/***/ }),
+
 /***/ "core-js/library/fn/array/is-array":
 /*!****************************************************!*\
   !*** external "core-js/library/fn/array/is-array" ***!
@@ -524,6 +651,17 @@ module.exports = require("core-js/library/fn/get-iterator");
 
 /***/ }),
 
+/***/ "core-js/library/fn/is-iterable":
+/*!*************************************************!*\
+  !*** external "core-js/library/fn/is-iterable" ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("core-js/library/fn/is-iterable");
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
@@ -532,6 +670,17 @@ module.exports = require("core-js/library/fn/get-iterator");
 /***/ (function(module, exports) {
 
 module.exports = require("react");
+
+/***/ }),
+
+/***/ "styled-components":
+/*!************************************!*\
+  !*** external "styled-components" ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("styled-components");
 
 /***/ })
 

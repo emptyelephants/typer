@@ -1,34 +1,34 @@
-const handleWordClass = (mapIndex, wordIndex, wasCorrect) => {
-  let theClassName = '';
+import styled from 'styled-components';
 
-  if (mapIndex === wordIndex) {
-    theClassName += 'current ';
-  }
-  console.log('this bool ' + wasCorrect);
-  if (!wasCorrect) {
-    theClassName += 'wrong ';
-  }
-
-  return theClassName;
-};
-
-const wordsAssembler = (words, wordIndex, wasCorrect) => (
+const wordsAssembler = (words, wordIndex, incorrectWords) => (
   words.map((word, index) => (
-    <span className={handleWordClass(index, wordIndex, wasCorrect)}>
+    <WordState
+      current={wordIndex === index}
+      wasWrong={wordIndex > index && incorrectWords.includes(index)}
+      upComing={wordIndex < index}
+    >
       {word}
-    </span>
+    </WordState>
   ))
 );
 
 const WordDisplay = (props) => {
-  console.log(props);
-  const { words, wordIndex, wasCorrect } = props;
-  const allWords = wordsAssembler(words, wordIndex, wasCorrect);
+  const { words, wordIndex, incorrectWords } = props;
+  const allWords = wordsAssembler(words, wordIndex, incorrectWords);
   return (
     <p>
       {allWords}
     </p>
   );
 };
+
+const WordState = styled.span`
+  color: ${props => (props.wasWrong ? 'red' : 'green')};
+  color: ${props => (props.current ? 'purple' : '')};
+  color: ${props => (props.upComing ? 'black !important' : '')};
+
+  display:inline-block;
+  margin-right:0.7em;
+`;
 
 export default WordDisplay;
