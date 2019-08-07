@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const checkLetter = (
   userWord,
@@ -8,9 +9,12 @@ const checkLetter = (
   incrementUserLetters,
   updateIncorrect,
   wordIndex,
+  endOfGame,
 ) => {
   const letterIndex = userWord.length - 1;
-
+  if (endOfGame) {
+    return userWord;
+  }
   // ignore on empty word
   if (userWord[0] === ' ') {
     return '';
@@ -38,10 +42,17 @@ const checkLetter = (
   return userWord;
 };
 
-const handleBackspace = (e, decrementUserLetters) => {
-  if (e.key === 'Backspace') {
+const handleBackspace = (e, decrementUserLetters, userWord) => {
+  if (e.key === 'Backspace' && userWord) {
     decrementUserLetters();
   }
+};
+
+const handleGameStart = (handler, currentWord, wordIndex) => {
+  if (currentWord === '' && wordIndex === 0) {
+    return handler(Date.now());
+  }
+  return false;
 };
 
 const InputBar = (props) => {
@@ -53,14 +64,17 @@ const InputBar = (props) => {
     updateIncorrect,
     incrementUserLetters,
     decrementUserLetters,
+    setGameStart,
+    endOfGame,
   } = props;
 
   const [userWord, setUserWord] = useState('');
 
   return (
-    <>
-      <input
-        className={userWord === currentWord.slice(0, userWord.length) ? '' : 'inputWrong'}
+    <GameControls>
+      <GameInput
+        value={userWord}
+        incorrectWord={userWord.trim() !== currentWord.slice(0, userWord.length)}
         onChange={e => setUserWord(checkLetter(
           e.target.value,
           incrementWordIndex,
@@ -69,12 +83,43 @@ const InputBar = (props) => {
           incrementUserLetters,
           updateIncorrect,
           wordIndex,
+          endOfGame,
         ))}
-        onKeyDown={e => handleBackspace(e, decrementUserLetters)}
-        value={userWord}
+        onKeyDown={(e) => {
+          handleBackspace(e, decrementUserLetters, userWord);
+          handleGameStart(setGameStart, userWord, wordIndex);
+        }}
       />
-    </>
+      <GameRestart
+        onClick={() => console.log('todo')}
+      >
+        restart
+      </GameRestart>
+    </GameControls>
   );
 };
 
+
 export default InputBar;
+
+
+const GameInput = styled.input`
+  background: ${props => (props.incorrectWord ? '#BF616A' : '#4C566A')};
+  width: 90%;
+  border:none;
+  height:30px;
+  font-size:24px;
+  padding:12px 12px;
+  box-sizing:border-box;
+  color:#fff;
+`;
+
+const GameRestart = styled.button`
+`;
+
+const GameControls = styled.div`
+  width: 100%;
+  padding:14px 0 0;
+  text-align:left;
+  display:flex;
+`;

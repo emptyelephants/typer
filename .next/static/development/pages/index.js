@@ -1,5 +1,35 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["static/development/pages/index.js"],{
 
+/***/ "./components/gameOptions.js":
+/*!***********************************!*\
+  !*** ./components/gameOptions.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _jsxFileName = "/Users/migueltrinidad/Play/typer/components/gameOptions.js";
+
+
+
+var GameOptions = function GameOptions(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 6
+    },
+    __self: this
+  }, "foo"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (GameOptions);
+
+/***/ }),
+
 /***/ "./components/inputBar.js":
 /*!********************************!*\
   !*** ./components/inputBar.js ***!
@@ -9,15 +39,58 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral */ "./node_modules/@babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral.js");
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime-corejs2/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/date/now */ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+
+
 
 var _jsxFileName = "/Users/migueltrinidad/Play/typer/components/inputBar.js";
 
+function _templateObject3() {
+  var data = Object(_babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  width: 100%;\n  padding:14px 0 0;\n  text-align:left;\n  display:flex;\n"]);
 
-var checkLetter = function checkLetter(userWord, incrementWordIndex, currentWord, incrementWrongLetters, incrementUserLetters, updateIncorrect, wordIndex) {
-  var letterIndex = userWord.length - 1; // ignore on empty word
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = Object(_babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = Object(_babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  background: ", ";\n  width: 90%;\n  border:none;\n  height:30px;\n  font-size:24px;\n  padding:12px 12px;\n  box-sizing:border-box;\n  color:#fff;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+
+
+
+var checkLetter = function checkLetter(userWord, incrementWordIndex, currentWord, incrementWrongLetters, incrementUserLetters, updateIncorrect, wordIndex, endOfGame) {
+  var letterIndex = userWord.length - 1;
+
+  if (endOfGame) {
+    return userWord;
+  } // ignore on empty word
+
 
   if (userWord[0] === ' ') {
     return '';
@@ -50,10 +123,18 @@ var checkLetter = function checkLetter(userWord, incrementWordIndex, currentWord
   return userWord;
 };
 
-var handleBackspace = function handleBackspace(e, decrementUserLetters) {
-  if (e.key === 'Backspace') {
+var handleBackspace = function handleBackspace(e, decrementUserLetters, userWord) {
+  if (e.key === 'Backspace' && userWord) {
     decrementUserLetters();
   }
+};
+
+var handleGameStart = function handleGameStart(handler, currentWord, wordIndex) {
+  if (currentWord === '' && wordIndex === 0) {
+    return handler(_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_2___default()());
+  }
+
+  return false;
 };
 
 var InputBar = function InputBar(props) {
@@ -63,31 +144,103 @@ var InputBar = function InputBar(props) {
       incrementWrongLetters = props.incrementWrongLetters,
       updateIncorrect = props.updateIncorrect,
       incrementUserLetters = props.incrementUserLetters,
-      decrementUserLetters = props.decrementUserLetters;
+      decrementUserLetters = props.decrementUserLetters,
+      setGameStart = props.setGameStart,
+      endOfGame = props.endOfGame;
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''),
-      _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_0__["default"])(_useState, 2),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_3__["useState"])(''),
+      _useState2 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__["default"])(_useState, 2),
       userWord = _useState2[0],
       setUserWord = _useState2[1];
 
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
-    className: userWord === currentWord.slice(0, userWord.length) ? '' : 'inputWrong',
-    onChange: function onChange(e) {
-      return setUserWord(checkLetter(e.target.value, incrementWordIndex, currentWord, incrementWrongLetters, incrementUserLetters, updateIncorrect, wordIndex));
-    },
-    onKeyDown: function onKeyDown(e) {
-      return handleBackspace(e, decrementUserLetters);
-    },
-    value: userWord,
+  return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(GameControls, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 62
+      lineNumber: 74
     },
     __self: this
-  }));
+  }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(GameInput, {
+    value: userWord,
+    incorrectWord: userWord.trim() !== currentWord.slice(0, userWord.length),
+    onChange: function onChange(e) {
+      return setUserWord(checkLetter(e.target.value, incrementWordIndex, currentWord, incrementWrongLetters, incrementUserLetters, updateIncorrect, wordIndex, endOfGame));
+    },
+    onKeyDown: function onKeyDown(e) {
+      handleBackspace(e, decrementUserLetters, userWord);
+      handleGameStart(setGameStart, userWord, wordIndex);
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 75
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(GameRestart, {
+    onClick: function onClick() {
+      return console.log('todo');
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 93
+    },
+    __self: this
+  }, "restart"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (InputBar);
+var GameInput = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].input(_templateObject(), function (props) {
+  return props.incorrectWord ? '#BF616A' : '#4C566A';
+});
+var GameRestart = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].button(_templateObject2());
+var GameControls = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div(_templateObject3());
+
+/***/ }),
+
+/***/ "./components/scoreBoard.js":
+/*!**********************************!*\
+  !*** ./components/scoreBoard.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/date/now */ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+
+var _jsxFileName = "/Users/migueltrinidad/Play/typer/components/scoreBoard.js";
+
+
+var ScoreBoard = function ScoreBoard(props) {
+  var gameStart = props.gameStart,
+      wordIndex = props.wordIndex,
+      endOfGame = props.endOfGame,
+      incorrectWords = props.incorrectWords,
+      letterAccuracy = props.letterAccuracy;
+  var wpmScore = (wordIndex - incorrectWords) / ((_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0___default()() - gameStart) / 1000) * 60;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 11
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 12
+    },
+    __self: this
+  }, "WPM:", endOfGame && wpmScore || 'XX'), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 16
+    },
+    __self: this
+  }, "Letter Accuracy:", letterAccuracy));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (ScoreBoard);
 
 /***/ }),
 
@@ -127,7 +280,7 @@ var WordDisplay = function WordDisplay(props) {
       wordIndex = props.wordIndex,
       incorrectWords = props.incorrectWords;
   var allWords = wordsAssembler(words, wordIndex, incorrectWords);
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(WordsContainer, {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 19
@@ -136,16 +289,20 @@ var WordDisplay = function WordDisplay(props) {
   }, allWords);
 };
 
-var WordState = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].span.withConfig({
+var WordState = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].p.withConfig({
   displayName: "wordsDisplay__WordState",
   componentId: "sc-15txsww-0"
-})(["color:", ";color:", ";color:", ";display:inline-block;margin-right:0.7em;"], function (props) {
+})(["color:", ";color:", ";color:", ";display:inline-block;margin-right:0.4em;margin-bottom:0.1em;font-size:24px;font-family:'Open Sans';"], function (props) {
   return props.wasWrong ? 'red' : 'green';
 }, function (props) {
   return props.current ? 'purple' : '';
 }, function (props) {
-  return props.upComing ? 'black' : '';
+  return props.upComing ? '#fff' : '';
 });
+var WordsContainer = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div.withConfig({
+  displayName: "wordsDisplay__WordsContainer",
+  componentId: "sc-15txsww-1"
+})(["display:flex;flex-wrap:wrap;"]);
 /* harmony default export */ __webpack_exports__["default"] = (WordDisplay);
 
 /***/ }),
@@ -172,6 +329,17 @@ module.exports = __webpack_require__(/*! core-js/library/fn/array/is-array */ ".
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/date/now.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/date/now */ "./node_modules/core-js/library/fn/date/now.js");
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs2/core-js/get-iterator.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs2/core-js/get-iterator.js ***!
@@ -191,6 +359,28 @@ module.exports = __webpack_require__(/*! core-js/library/fn/get-iterator */ "./n
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(/*! core-js/library/fn/is-iterable */ "./node_modules/core-js/library/fn/is-iterable.js");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/object/define-properties */ "./node_modules/core-js/library/fn/object/define-properties.js");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/object/freeze.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/object/freeze.js ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/object/freeze */ "./node_modules/core-js/library/fn/object/freeze.js");
 
 /***/ }),
 
@@ -418,6 +608,36 @@ function _slicedToArray(arr, i) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral.js ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _taggedTemplateLiteral; });
+/* harmony import */ var _core_js_object_define_properties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core-js/object/define-properties */ "./node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js");
+/* harmony import */ var _core_js_object_define_properties__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_core_js_object_define_properties__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _core_js_object_freeze__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../core-js/object/freeze */ "./node_modules/@babel/runtime-corejs2/core-js/object/freeze.js");
+/* harmony import */ var _core_js_object_freeze__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_core_js_object_freeze__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function _taggedTemplateLiteral(strings, raw) {
+  if (!raw) {
+    raw = strings.slice(0);
+  }
+
+  return _core_js_object_freeze__WEBPACK_IMPORTED_MODULE_1___default()(_core_js_object_define_properties__WEBPACK_IMPORTED_MODULE_0___default()(strings, {
+    raw: {
+      value: _core_js_object_freeze__WEBPACK_IMPORTED_MODULE_1___default()(raw)
+    }
+  }));
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js":
 /*!******************************************************************************!*\
   !*** ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js ***!
@@ -593,6 +813,19 @@ module.exports = __webpack_require__(/*! ../../modules/_core */ "./node_modules/
 
 /***/ }),
 
+/***/ "./node_modules/core-js/library/fn/date/now.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/library/fn/date/now.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es6.date.now */ "./node_modules/core-js/library/modules/es6.date.now.js");
+module.exports = __webpack_require__(/*! ../../modules/_core */ "./node_modules/core-js/library/modules/_core.js").Date.now;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/library/fn/get-iterator.js":
 /*!*********************************************************!*\
   !*** ./node_modules/core-js/library/fn/get-iterator.js ***!
@@ -617,6 +850,35 @@ module.exports = __webpack_require__(/*! ../modules/core.get-iterator */ "./node
 __webpack_require__(/*! ../modules/web.dom.iterable */ "./node_modules/core-js/library/modules/web.dom.iterable.js");
 __webpack_require__(/*! ../modules/es6.string.iterator */ "./node_modules/core-js/library/modules/es6.string.iterator.js");
 module.exports = __webpack_require__(/*! ../modules/core.is-iterable */ "./node_modules/core-js/library/modules/core.is-iterable.js");
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/fn/object/define-properties.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/core-js/library/fn/object/define-properties.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es6.object.define-properties */ "./node_modules/core-js/library/modules/es6.object.define-properties.js");
+var $Object = __webpack_require__(/*! ../../modules/_core */ "./node_modules/core-js/library/modules/_core.js").Object;
+module.exports = function defineProperties(T, D) {
+  return $Object.defineProperties(T, D);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/fn/object/freeze.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/library/fn/object/freeze.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es6.object.freeze */ "./node_modules/core-js/library/modules/es6.object.freeze.js");
+module.exports = __webpack_require__(/*! ../../modules/_core */ "./node_modules/core-js/library/modules/_core.js").Object.freeze;
 
 
 /***/ }),
@@ -1408,6 +1670,70 @@ module.exports = true;
 
 /***/ }),
 
+/***/ "./node_modules/core-js/library/modules/_meta.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/core-js/library/modules/_meta.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var META = __webpack_require__(/*! ./_uid */ "./node_modules/core-js/library/modules/_uid.js")('meta');
+var isObject = __webpack_require__(/*! ./_is-object */ "./node_modules/core-js/library/modules/_is-object.js");
+var has = __webpack_require__(/*! ./_has */ "./node_modules/core-js/library/modules/_has.js");
+var setDesc = __webpack_require__(/*! ./_object-dp */ "./node_modules/core-js/library/modules/_object-dp.js").f;
+var id = 0;
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+var FREEZE = !__webpack_require__(/*! ./_fails */ "./node_modules/core-js/library/modules/_fails.js")(function () {
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function (it) {
+  setDesc(it, META, { value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  } });
+};
+var fastKey = function (it, create) {
+  // return primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function (it, create) {
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY: META,
+  NEED: false,
+  fastKey: fastKey,
+  getWeak: getWeak,
+  onFreeze: onFreeze
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/library/modules/_microtask.js":
 /*!************************************************************!*\
   !*** ./node_modules/core-js/library/modules/_microtask.js ***!
@@ -1686,6 +2012,27 @@ var enumBugKeys = __webpack_require__(/*! ./_enum-bug-keys */ "./node_modules/co
 
 module.exports = Object.keys || function keys(O) {
   return $keys(O, enumBugKeys);
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/_object-sap.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/core-js/library/modules/_object-sap.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__(/*! ./_export */ "./node_modules/core-js/library/modules/_export.js");
+var core = __webpack_require__(/*! ./_core */ "./node_modules/core-js/library/modules/_core.js");
+var fails = __webpack_require__(/*! ./_fails */ "./node_modules/core-js/library/modules/_fails.js");
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
 };
 
 
@@ -2332,6 +2679,55 @@ Iterators.Arguments = Iterators.Array;
 addToUnscopables('keys');
 addToUnscopables('values');
 addToUnscopables('entries');
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/es6.date.now.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/library/modules/es6.date.now.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 20.3.3.1 / 15.9.4.4 Date.now()
+var $export = __webpack_require__(/*! ./_export */ "./node_modules/core-js/library/modules/_export.js");
+
+$export($export.S, 'Date', { now: function () { return new Date().getTime(); } });
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/es6.object.define-properties.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/core-js/library/modules/es6.object.define-properties.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(/*! ./_export */ "./node_modules/core-js/library/modules/_export.js");
+// 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
+$export($export.S + $export.F * !__webpack_require__(/*! ./_descriptors */ "./node_modules/core-js/library/modules/_descriptors.js"), 'Object', { defineProperties: __webpack_require__(/*! ./_object-dps */ "./node_modules/core-js/library/modules/_object-dps.js") });
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/es6.object.freeze.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/library/modules/es6.object.freeze.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.5 Object.freeze(O)
+var isObject = __webpack_require__(/*! ./_is-object */ "./node_modules/core-js/library/modules/_is-object.js");
+var meta = __webpack_require__(/*! ./_meta */ "./node_modules/core-js/library/modules/_meta.js").onFreeze;
+
+__webpack_require__(/*! ./_object-sap */ "./node_modules/core-js/library/modules/_object-sap.js")('freeze', function ($freeze) {
+  return function freeze(it) {
+    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
+  };
+});
 
 
 /***/ }),
@@ -7659,7 +8055,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _components_inputBar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/inputBar */ "./components/inputBar.js");
 /* harmony import */ var _components_wordsDisplay__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/wordsDisplay */ "./components/wordsDisplay.js");
-/* harmony import */ var _words__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../words */ "./words.js");
+/* harmony import */ var _components_scoreBoard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/scoreBoard */ "./components/scoreBoard.js");
+/* harmony import */ var _components_gameOptions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/gameOptions */ "./components/gameOptions.js");
+/* harmony import */ var _words__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../words */ "./words.js");
 
 
 
@@ -7674,6 +8072,8 @@ var _jsxFileName = "/Users/migueltrinidad/Play/typer/pages/index.js";
 
 
 
+
+
 var Index = function Index(props) {
   var words = props.words;
 
@@ -7682,7 +8082,7 @@ var Index = function Index(props) {
       wordIndex = _useState2[0],
       _incrementWordIndex = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])(12),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])(0),
       _useState4 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_useState3, 2),
       userLetters = _useState4[0],
       setUserLetters = _useState4[1];
@@ -7695,40 +8095,82 @@ var Index = function Index(props) {
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])([]),
       _useState8 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_useState7, 2),
       incorrectWords = _useState8[0],
-      setIncorrect = _useState8[1]; // user set ammount of words;
+      setIncorrect = _useState8[1];
 
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])(0),
+      _useState10 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_useState9, 2),
+      gameStart = _useState10[0],
+      _setGameStart = _useState10[1];
 
-  var shortword = words.slice(0, 20);
-  var currentWord = shortword[wordIndex];
-  return react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(GameContainer, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 23
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("h1", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 24
-    },
-    __self: this
-  }, "Typer"), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 25
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_wordsDisplay__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    words: shortword,
-    wordIndex: wordIndex,
-    incorrectWords: incorrectWords,
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])(20),
+      _useState12 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_useState11, 2),
+      ammountOfWords = _useState12[0],
+      _setAmmountOfWords = _useState12[1];
+
+  var gameWords = words.slice(0, ammountOfWords);
+  var currentWord = gameWords[wordIndex];
+  var endOfGame = gameWords[wordIndex] === undefined;
+  return react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(Game, {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 26
     },
     __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(GameTitle, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 27
+    },
+    __self: this
+  }, "Typer"), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(GameInfo, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 28
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_scoreBoard__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    gameStart: gameStart,
+    wordIndex: wordIndex,
+    endOfGame: endOfGame,
+    letterAccuracy: ((userLetters - wrongLetters) / userLetters * 100).toFixed(0),
+    incorrectWords: incorrectWords.length,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 29
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_gameOptions__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    setAmmountOfWords: function setAmmountOfWords(e) {
+      return _setAmmountOfWords(e);
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 36
+    },
+    __self: this
+  })), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(GameContainer, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 40
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("div", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 41
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_wordsDisplay__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    words: gameWords,
+    wordIndex: wordIndex,
+    incorrectWords: incorrectWords,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 42
+    },
+    __self: this
   }), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_inputBar__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    currentWord: currentWord,
+    currentWord: currentWord || ' ',
     wordIndex: wordIndex,
     incrementWordIndex: function incrementWordIndex() {
       return _incrementWordIndex(wordIndex + 1);
@@ -7748,24 +8190,24 @@ var Index = function Index(props) {
     decrementUserLetters: function decrementUserLetters() {
       return setUserLetters(userLetters - 1);
     },
+    setGameStart: function setGameStart(e) {
+      return _setGameStart(e);
+    },
+    endOfGame: endOfGame,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 31
+      lineNumber: 47
     },
     __self: this
   }), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement("br", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 41
+      lineNumber: 59
     },
     __self: this
-  }), "your accuracy is  ".concat(((userLetters - wrongLetters) / userLetters * 100).toFixed(0), "%")));
-};
+  }))));
+}; // all available words to play with
 
-var GameContainer = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
-  displayName: "pages__GameContainer",
-  componentId: "sc-1wwhogh-0"
-})(["text-align:center;max-width:1440px;margin:auto;"]); // all available words to play with
 
 Index.getInitialProps =
 /*#__PURE__*/
@@ -7777,10 +8219,10 @@ _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(f
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
-          _words__WEBPACK_IMPORTED_MODULE_8__["default"].sort(function () {
-            return Math.random() - 0.2;
+          _words__WEBPACK_IMPORTED_MODULE_10__["default"].sort(function () {
+            return Math.random() - 0.5;
           });
-          words = _words__WEBPACK_IMPORTED_MODULE_8__["default"].slice(0, 1000);
+          words = _words__WEBPACK_IMPORTED_MODULE_10__["default"].slice(0, 1000);
           return _context.abrupt("return", {
             words: words
           });
@@ -7793,6 +8235,22 @@ _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(f
   }, _callee);
 }));
 /* harmony default export */ __webpack_exports__["default"] = (Index);
+var Game = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
+  displayName: "pages__Game",
+  componentId: "sc-1wwhogh-0"
+})(["height:100vh;background:#4C566A;"]);
+var GameContainer = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
+  displayName: "pages__GameContainer",
+  componentId: "sc-1wwhogh-1"
+})(["text-align:center;margin:auto;max-width:70%;margin:auto;padding:17px;border-radius:3px;background:#5E81AC;"]);
+var GameInfo = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
+  displayName: "pages__GameInfo",
+  componentId: "sc-1wwhogh-2"
+})(["width:70%;margin:auto;box-sizing:border-box;margin-bottom:10px;"]);
+var GameTitle = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].h1.withConfig({
+  displayName: "pages__GameTitle",
+  componentId: "sc-1wwhogh-3"
+})(["text-align:center;font-weight:bold;font-size:2em;padding:20px 0px 30px;font-family:'Open Sans';"]);
 
 /***/ }),
 

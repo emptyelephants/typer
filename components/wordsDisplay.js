@@ -16,18 +16,27 @@ const WordDisplay = (props) => {
   const { words, wordIndex, incorrectWords } = props;
   const allWords = wordsAssembler(words, wordIndex, incorrectWords);
   return (
-    <p>
+    <WordsContainer>
       {allWords}
-    </p>
+    </WordsContainer>
   );
 };
 
-const WordState = styled.span`
+const WordState = styled.p`
   color: ${props => (props.wasWrong ? 'red' : 'green')};
   color: ${props => (props.current ? 'purple' : '')};
-  color: ${props => (props.upComing ? 'black' : '')};
+  color: ${props => (props.upComing ? '#fff' : '')};
   display:inline-block;
-  margin-right:0.7em;
+  margin-right:0.4em;
+  margin-bottom:0.1em;
+  font-size:24px;
+  font-family:'Open Sans';
+
+`;
+
+const WordsContainer = styled.div`
+  display:flex;
+  flex-wrap:wrap;
 `;
 
 export default WordDisplay;

@@ -1533,22 +1533,40 @@ function (_Document) {
           lineNumber: 24
         },
         __self: this
-      }, "Typer"), this.props.styleTags), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("body", {
+      }, "Typer"), this.props.styleTags, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("link", {
+        href: "https://fonts.googleapis.com/css?family=Open+Sans:400+800",
+        rel: "stylesheet",
         __source: {
           fileName: _jsxFileName,
           lineNumber: 28
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_8__["Main"], {
+      }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("link", {
+        rel: "stylesheet",
+        href: "https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css",
+        integrity: "sha256-gvEnj2axkqIj4wbYhPjbWV7zttgpzBVEgHub9AAZQD4=",
+        crossorigin: "anonymous",
         __source: {
           fileName: _jsxFileName,
           lineNumber: 29
         },
         __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("body", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 31
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_8__["Main"], {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 32
+        },
+        __self: this
       }), react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_8__["NextScript"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 30
+          lineNumber: 33
         },
         __self: this
       })));

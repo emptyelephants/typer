@@ -1,26 +1,21 @@
 {
   "name": "typer",
   "version": "1.0.0",
-  "engines": {
-    "node": "10.4.1"
-  },
-  "description": "",
+  "description": "A copy of typings.gg for react practice",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next ",
+    "dev": "next",
     "build": "next build",
-    "start": "next start -p $PORT"
+    "start": "next start"
   },
-  "author": "",
+  "author": "Miguel Trinidad",
   "license": "ISC",
   "dependencies": {
     "babel-plugin-styled-components": "^1.10.6",
-    "dotenv": "^8.0.0",
-    "isomorphic-unfetch": "^3.0.0",
-    "next": "^9.0.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "next": "^9.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {

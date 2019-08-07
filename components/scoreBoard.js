@@ -1,26 +1,27 @@
-import styled from 'styled-components';
-
 const ScoreBoard = (props) => {
-  const { wpm, wordAccuracy, letterAccuracy } = props;
+  const {
+    gameStart,
+    wordIndex,
+    endOfGame,
+    incorrectWords,
+    letterAccuracy,
+  } = props;
+  const wpmScore = (((wordIndex - incorrectWords) / ((Date.now() - gameStart) / 1000)) * 60);
+  const letterAccActual = (
+    ((letterAccuracy.userLetters - letterAccuracy.wrongLetters) / letterAccuracy.userLetters)
+  );
   return (
-    <ScoreBoardContainer>
+    <div>
       <p>
         WPM:
-        {wpm}
-      </p>
-      <p>
-        Word Accuracy:
-        {wordAccuracy}
+        { (endOfGame && wpmScore) || 'XX'}
       </p>
       <p>
         Letter Accuracy:
-        {letterAccuracy}
+        {(letterAccActual * 100).toFixed(0)}
       </p>
-    </ScoreBoardContainer>
+    </div>
   );
 };
 
-const ScoreBoardContainer = styled.div`
-  border:1px solid black;
-`;
 export default ScoreBoard;
