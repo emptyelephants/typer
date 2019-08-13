@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const checkLetter = (
   userWord,
-  incrementWordIndex,
+  setWordIndex,
   currentWord,
   incrementWrongLetters,
   incrementUserLetters,
@@ -15,25 +15,20 @@ const checkLetter = (
   if (endOfGame) {
     return userWord;
   }
-  // ignore on empty word
   if (userWord[0] === ' ') {
     return '';
   }
-
-  // handle next word, check for correctness
   if (userWord[letterIndex] === ' ') {
-    incrementWordIndex();
+    setWordIndex();
     if (userWord.trim() !== currentWord) {
       updateIncorrect(wordIndex);
     }
     return '';
   }
-  // if the letter was correect
   if (userWord[letterIndex] === currentWord[letterIndex]) {
     incrementUserLetters();
     return userWord;
   }
-  // if the letter was wrong
   if (userWord[letterIndex] !== currentWord[letterIndex]) {
     incrementWrongLetters();
     incrementUserLetters();
@@ -59,7 +54,7 @@ const InputBar = (props) => {
   const {
     currentWord,
     wordIndex,
-    incrementWordIndex,
+    setWordIndex,
     incrementWrongLetters,
     updateIncorrect,
     incrementUserLetters,
@@ -73,11 +68,12 @@ const InputBar = (props) => {
   return (
     <GameControls>
       <GameInput
+        placeholder="Just Start Typing"
         value={userWord}
         incorrectWord={userWord.trim() !== currentWord.slice(0, userWord.length)}
         onChange={e => setUserWord(checkLetter(
           e.target.value,
-          incrementWordIndex,
+          setWordIndex,
           currentWord,
           incrementWrongLetters,
           incrementUserLetters,
@@ -89,19 +85,18 @@ const InputBar = (props) => {
           handleBackspace(e, decrementUserLetters, userWord);
           handleGameStart(setGameStart, userWord, wordIndex);
         }}
+        endOfGame={endOfGame}
       />
-      <GameRestart
+      {/* <GameRestart
         onClick={() => console.log('todo')}
       >
         restart
-      </GameRestart>
+      </GameRestart> */}
     </GameControls>
   );
 };
 
-
 export default InputBar;
-
 
 const GameInput = styled.input`
   background: ${props => (props.incorrectWord ? '#BF616A' : '#4C566A')};
@@ -114,8 +109,6 @@ const GameInput = styled.input`
   color:#fff;
 `;
 
-const GameRestart = styled.button`
-`;
 
 const GameControls = styled.div`
   width: 100%;

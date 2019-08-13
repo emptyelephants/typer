@@ -1,6 +1,7 @@
 /* eslint-disable func-names */
 import { useState } from 'react';
 import styled from 'styled-components';
+import Head from 'next/head';
 
 import InputBar from '../components/inputBar';
 import WordsDisplay from '../components/wordsDisplay';
@@ -12,18 +13,24 @@ import allWords from '../words';
 const Index = (props) => {
   const { words } = props;
 
-  const [wordIndex, incrementWordIndex] = useState(0);
+  const [wordIndex, setWordIndex] = useState(0);
   const [userLetters, setUserLetters] = useState(0);
   const [wrongLetters, setWrongLetters] = useState(0);
   const [incorrectWords, setIncorrect] = useState([]);
   const [gameStart, setGameStart] = useState(0);
   const [ammountOfWords, setAmmountOfWords] = useState(20);
+  const [randWords, setRandWords] = useState(words.slice(0, ammountOfWords));
 
-  const gameWords = words.slice(0, ammountOfWords);
-  const currentWord = gameWords[wordIndex];
+  const gameWords = randWords;
+  const currentWord = randWords[wordIndex];
   const endOfGame = gameWords[wordIndex] === undefined;
+
   return (
     <Game>
+      <Head>
+        <title>Typer</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <GameTitle>Typer</GameTitle>
       <GameInfo>
         <ScoreBoard
@@ -35,29 +42,30 @@ const Index = (props) => {
         />
         <GameOptions
           setAmmountOfWords={e => setAmmountOfWords(e)}
+          setGameStart={e => setGameStart(e)}
+          setRandWords={e => setRandWords(e)}
+          words={words}
+          setWordIndex={() => setWordIndex(0)}
         />
       </GameInfo>
       <GameContainer>
-        <div>
-          <WordsDisplay
-            words={gameWords}
-            wordIndex={wordIndex}
-            incorrectWords={incorrectWords}
-          />
-          <InputBar
-            currentWord={currentWord || ' '}
-            wordIndex={wordIndex}
-            incrementWordIndex={() => incrementWordIndex(wordIndex + 1)}
-            incrementWrongLetters={() => setWrongLetters(wrongLetters + 1)}
-            decrementWrongLetters={() => setWrongLetters(wrongLetters - 1)}
-            updateIncorrect={e => setIncorrect([...incorrectWords, e])}
-            incrementUserLetters={() => setUserLetters(userLetters + 1)}
-            decrementUserLetters={() => setUserLetters(userLetters - 1)}
-            setGameStart={e => setGameStart(e)}
-            endOfGame={endOfGame}
-          />
-          <br />
-        </div>
+        <WordsDisplay
+          words={gameWords}
+          wordIndex={wordIndex}
+          incorrectWords={incorrectWords}
+        />
+        <InputBar
+          currentWord={currentWord || ' '}
+          wordIndex={wordIndex}
+          setWordIndex={() => setWordIndex(wordIndex + 1)}
+          incrementWrongLetters={() => setWrongLetters(wrongLetters + 1)}
+          decrementWrongLetters={() => setWrongLetters(wrongLetters - 1)}
+          updateIncorrect={e => setIncorrect([...incorrectWords, e])}
+          incrementUserLetters={() => setUserLetters(userLetters + 1)}
+          decrementUserLetters={() => setUserLetters(userLetters - 1)}
+          setGameStart={e => setGameStart(e)}
+          endOfGame={endOfGame}
+        />
       </GameContainer>
     </Game>
   );
@@ -67,7 +75,7 @@ const Index = (props) => {
 // all available words to play with
 Index.getInitialProps = async function () {
   allWords.sort(() => Math.random() - 0.5);
-  const words = allWords.slice(0, 1000);
+  const words = allWords.filter(word => word.length < 7);
 
   return {
     words,
@@ -75,12 +83,24 @@ Index.getInitialProps = async function () {
 };
 
 export default Index;
+
 const Game = styled.div`
   height:100vh;
   background:#4C566A;
 `;
 
-const GameContainer = styled.div`
+
+const MainContainer = styled.div`
+  width: 70%;
+  margin: auto;
+  box-sizing:border-box;
+  margin-bottom:10px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap:wrap;
+`;
+
+const GameContainer = styled(MainContainer)`
   text-align:center;
   margin:auto;
   max-width: 70%;
@@ -90,11 +110,10 @@ const GameContainer = styled.div`
   background:#5E81AC;
 `;
 
-const GameInfo = styled.div`
-  width: 70%;
-  margin: auto;
-  box-sizing:border-box;
-  margin-bottom:10px;
+const GameInfo = styled(MainContainer)`
+  *{
+    color:#fff;
+  }
 `;
 
 const GameTitle = styled.h1`
@@ -103,4 +122,5 @@ const GameTitle = styled.h1`
   font-size:2em;
   padding:20px 0px 30px;
   font-family:'Open Sans';
+  color:#fff;
 `;

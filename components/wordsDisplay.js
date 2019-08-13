@@ -22,21 +22,21 @@ const WordDisplay = (props) => {
   );
 };
 
+export default WordDisplay;
+
 const WordState = styled.p`
-  color: ${props => (props.wasWrong ? 'red' : 'green')};
-  color: ${props => (props.current ? 'purple' : '')};
+  color: ${props => (props.wasWrong ? '#ff1c32' : '#40dc64')};
+  color: ${props => (props.current ? '#e760e7' : '')};
   color: ${props => (props.upComing ? '#fff' : '')};
   display:inline-block;
   margin-right:0.4em;
   margin-bottom:0.1em;
   font-size:24px;
   font-family:'Open Sans';
-
 `;
 
 const WordsContainer = styled.div`
   display:flex;
   flex-wrap:wrap;
+  width:100%;
 `;
-
-export default WordDisplay;
