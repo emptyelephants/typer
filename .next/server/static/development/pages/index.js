@@ -117,36 +117,52 @@ const assembleOptions = (array, props) => {
     setWordIndex,
     words
   } = props;
-  return array.map(option => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
+  return array.map((option, index) => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
     onClick: () => {
       setWordIndex();
       setRandWords(words.sort(() => Math.random() - 0.5).slice(0, option));
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 9
+      lineNumber: 10
     },
     __self: undefined
-  }, option));
+  }, option), index !== array.length - 1 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionDivider, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 18
+    },
+    __self: undefined
+  }, "/")));
 };
 
 const GameOptions = props => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsContainer, {
   __source: {
     fileName: _jsxFileName,
-    lineNumber: 22
+    lineNumber: 25
   },
   __self: undefined
-}, assembleOptions(totalWords, props));
+}, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+  __source: {
+    fileName: _jsxFileName,
+    lineNumber: 26
+  },
+  __self: undefined
+}, "Test Length: "), ' ', assembleOptions(totalWords, props));
 
 /* harmony default export */ __webpack_exports__["default"] = (GameOptions);
 const OptionsContainer = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
   displayName: "gameOptions__OptionsContainer",
   componentId: "sc-1j1idj1-0"
-})(["display:flex;"]);
+})(["display:flex;p{font-family:'Open Sans';}"]);
 const Option = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.p.withConfig({
   displayName: "gameOptions__Option",
   componentId: "sc-1j1idj1-1"
 })(["margin:0 4px 0 0;cursor:pointer;"]);
+const OptionDivider = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.span.withConfig({
+  displayName: "gameOptions__OptionDivider",
+  componentId: "sc-1j1idj1-2"
+})(["margin:0px 4px;"]);
 
 /***/ }),
 
@@ -436,7 +452,7 @@ const Index = props => {
   const [wrongLetters, setWrongLetters] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
   const [incorrectWords, setIncorrect] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
   const [gameStart, setGameStart] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(0);
-  const [ammountOfWords, setAmmountOfWords] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(20);
+  const [ammountOfWords, setAmmountOfWords] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(25);
   const [randWords, setRandWords] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(words.slice(0, ammountOfWords));
   const gameWords = randWords;
   const currentWord = randWords[wordIndex];
@@ -551,7 +567,7 @@ Index.getInitialProps = async function () {
 const Game = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
   displayName: "pages__Game",
   componentId: "sc-1wwhogh-0"
-})(["height:100vh;background:#4C566A;"]);
+})(["height:100vh;background:#4C566A;overflow:auto;"]);
 const MainContainer = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
   displayName: "pages__MainContainer",
   componentId: "sc-1wwhogh-1"

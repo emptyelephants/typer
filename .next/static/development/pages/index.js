@@ -21,8 +21,8 @@ var assembleOptions = function assembleOptions(array, props) {
   var setRandWords = props.setRandWords,
       setWordIndex = props.setWordIndex,
       words = props.words;
-  return array.map(function (option) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
+  return array.map(function (option, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
       onClick: function onClick() {
         setWordIndex();
         setRandWords(words.sort(function () {
@@ -31,10 +31,16 @@ var assembleOptions = function assembleOptions(array, props) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 9
+        lineNumber: 10
       },
       __self: this
-    }, option);
+    }, option), index !== array.length - 1 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionDivider, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 18
+      },
+      __self: this
+    }, "/"));
   });
 };
 
@@ -42,21 +48,31 @@ var GameOptions = function GameOptions(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsContainer, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 22
+      lineNumber: 25
     },
     __self: this
-  }, assembleOptions(totalWords, props));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 26
+    },
+    __self: this
+  }, "Test Length: "), ' ', assembleOptions(totalWords, props));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GameOptions);
 var OptionsContainer = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div.withConfig({
   displayName: "gameOptions__OptionsContainer",
   componentId: "sc-1j1idj1-0"
-})(["display:flex;"]);
+})(["display:flex;p{font-family:'Open Sans';}"]);
 var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].p.withConfig({
   displayName: "gameOptions__Option",
   componentId: "sc-1j1idj1-1"
 })(["margin:0 4px 0 0;cursor:pointer;"]);
+var OptionDivider = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].span.withConfig({
+  displayName: "gameOptions__OptionDivider",
+  componentId: "sc-1j1idj1-2"
+})(["margin:0px 4px;"]);
 
 /***/ }),
 
@@ -9844,7 +9860,7 @@ var Index = function Index(props) {
       gameStart = _useState10[0],
       _setGameStart = _useState10[1];
 
-  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])(20),
+  var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_4__["useState"])(25),
       _useState12 = Object(_babel_runtime_corejs2_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_3__["default"])(_useState11, 2),
       ammountOfWords = _useState12[0],
       _setAmmountOfWords = _useState12[1];
@@ -10008,7 +10024,7 @@ _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(f
 var Game = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "pages__Game",
   componentId: "sc-1wwhogh-0"
-})(["height:100vh;background:#4C566A;"]);
+})(["height:100vh;background:#4C566A;overflow:auto;"]);
 var MainContainer = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "pages__MainContainer",
   componentId: "sc-1wwhogh-1"

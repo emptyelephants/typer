@@ -5,21 +5,26 @@ const totalWords = [10, 25, 100, 150, 200];
 const assembleOptions = (array, props) => {
   const { setRandWords, setWordIndex, words } = props;
   return (
-    array.map(option => (
-      <Option onClick={() => {
-        setWordIndex();
-        setRandWords(words.sort(() => Math.random() - 0.5).slice(0, option));
-      }
-      }
-      >
-        {option}
-      </Option>
+    array.map((option, index) => (
+      <>
+        <Option onClick={() => {
+          setWordIndex();
+          setRandWords(words.sort(() => Math.random() - 0.5).slice(0, option));
+        }
+        }
+        >
+          {option}
+        </Option>
+        { index !== array.length - 1 && <OptionDivider>/</OptionDivider>}
+      </>
     ))
   );
 };
 
 const GameOptions = props => (
   <OptionsContainer>
+    <p>Test Length: </p>
+    {' '}
     {assembleOptions(totalWords, props)}
   </OptionsContainer>
 );
@@ -29,10 +34,17 @@ export default GameOptions;
 
 const OptionsContainer = styled.div`
   display:flex;
-
+  
+  p {
+    font-family:'Open Sans';
+  }
 `;
 
 const Option = styled.p`
   margin:0 4px 0 0;
   cursor:pointer;
+`;
+
+const OptionDivider = styled.span`
+  margin:0px 4px;
 `;

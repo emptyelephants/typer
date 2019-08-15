@@ -18,7 +18,7 @@ const Index = (props) => {
   const [wrongLetters, setWrongLetters] = useState(0);
   const [incorrectWords, setIncorrect] = useState([]);
   const [gameStart, setGameStart] = useState(0);
-  const [ammountOfWords, setAmmountOfWords] = useState(20);
+  const [ammountOfWords, setAmmountOfWords] = useState(25);
   const [randWords, setRandWords] = useState(words.slice(0, ammountOfWords));
 
   const gameWords = randWords;
@@ -87,6 +87,7 @@ export default Index;
 const Game = styled.div`
   height:100vh;
   background:#4C566A;
+  overflow:auto;
 `;
 
 
