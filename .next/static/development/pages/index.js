@@ -20,24 +20,28 @@ var totalWords = [10, 25, 100, 150, 200];
 var assembleOptions = function assembleOptions(array, props) {
   var setRandWords = props.setRandWords,
       setWordIndex = props.setWordIndex,
-      words = props.words;
+      words = props.words,
+      currentOption = props.currentOption,
+      setAmmountOfWords = props.setAmmountOfWords;
   return array.map(function (option, index) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Option, {
+      currentOption: option === currentOption,
       onClick: function onClick() {
         setWordIndex();
+        setAmmountOfWords(option);
         setRandWords(words.sort(function () {
           return Math.random() - 0.5;
         }).slice(0, option));
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 10
+        lineNumber: 16
       },
       __self: this
     }, option), index !== array.length - 1 && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionDivider, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 18
+        lineNumber: 27
       },
       __self: this
     }, "/"));
@@ -48,16 +52,16 @@ var GameOptions = function GameOptions(props) {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OptionsContainer, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 25
+      lineNumber: 34
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 26
+      lineNumber: 35
     },
     __self: this
-  }, "Test Length: "), ' ', assembleOptions(totalWords, props));
+  }, "Test Length:"), assembleOptions(totalWords, props));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (GameOptions);
@@ -68,7 +72,9 @@ var OptionsContainer = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"]
 var Option = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].p.withConfig({
   displayName: "gameOptions__Option",
   componentId: "sc-1j1idj1-1"
-})(["margin:0 4px 0 0;cursor:pointer;"]);
+})(["margin:0 4px 0 0;cursor:pointer;text-decoration:", ""], function (props) {
+  return props.currentOption ? 'underline' : '';
+});
 var OptionDivider = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].span.withConfig({
   displayName: "gameOptions__OptionDivider",
   componentId: "sc-1j1idj1-2"
@@ -228,26 +234,26 @@ var ScoreBoard = function ScoreBoard(props) {
       incorrectWords = props.incorrectWords,
       letterAccuracy = props.letterAccuracy;
   var wpmScore = (wordIndex - incorrectWords) / ((_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0___default()() - gameStart) / 1000) * 60;
-  var letterAccActual = (letterAccuracy.userLetters - letterAccuracy.wrongLetters) / letterAccuracy.userLetters;
+  var letterAccActual = "".concat(letterAccuracy.userLetters - letterAccuracy.wrongLetters, " / ").concat(letterAccuracy.userLetters);
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ScoreBoardContainer, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 18
+      lineNumber: 16
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 19
+      lineNumber: 17
     },
     __self: this
-  }, "WPM:", endOfGame && wpmScore.toFixed(0) || 'XX'), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+  }, "WPM:", endOfGame && " ".concat(wpmScore.toFixed(0)) || ' XX'), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 23
+      lineNumber: 21
     },
     __self: this
-  }, "Letter Accuracy:", endOfGame && (letterAccActual * 100).toFixed(0) || 'XX'));
+  }, "Letter Accuracy:", endOfGame && " ".concat(letterAccActual) || ' XX'));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ScoreBoard);
@@ -9935,6 +9941,7 @@ var Index = function Index(props) {
     setRandWords: function setRandWords(e) {
       return _setRandWords(e);
     },
+    currentOption: ammountOfWords,
     words: words,
     setWordIndex: function setWordIndex() {
       return _setWordIndex(0);
@@ -9947,7 +9954,7 @@ var Index = function Index(props) {
   })), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(GameContainer, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 51
+      lineNumber: 52
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_wordsDisplay__WEBPACK_IMPORTED_MODULE_8__["default"], {
@@ -9956,7 +9963,7 @@ var Index = function Index(props) {
     incorrectWords: incorrectWords,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 52
+      lineNumber: 53
     },
     __self: this
   }), react__WEBPACK_IMPORTED_MODULE_4___default.a.createElement(_components_inputBar__WEBPACK_IMPORTED_MODULE_7__["default"], {
@@ -9986,7 +9993,7 @@ var Index = function Index(props) {
     endOfGame: endOfGame,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 57
+      lineNumber: 58
     },
     __self: this
   })));

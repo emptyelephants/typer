@@ -44,6 +44,7 @@ const Index = (props) => {
           setAmmountOfWords={e => setAmmountOfWords(e)}
           setGameStart={e => setGameStart(e)}
           setRandWords={e => setRandWords(e)}
+          currentOption={ammountOfWords}
           words={words}
           setWordIndex={() => setWordIndex(0)}
         />

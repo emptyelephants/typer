@@ -10,19 +10,17 @@ const ScoreBoard = (props) => {
   } = props;
 
   const wpmScore = (((wordIndex - incorrectWords) / ((Date.now() - gameStart) / 1000)) * 60);
-  const letterAccActual = (
-    ((letterAccuracy.userLetters - letterAccuracy.wrongLetters) / letterAccuracy.userLetters)
-  );
+  const letterAccActual = `${letterAccuracy.userLetters - letterAccuracy.wrongLetters} / ${letterAccuracy.userLetters}`;
 
   return (
     <ScoreBoardContainer>
       <p>
         WPM:
-        {(endOfGame && wpmScore.toFixed(0)) || 'XX'}
+        {(endOfGame && ` ${wpmScore.toFixed(0)}`) || ' XX'}
       </p>
       <p>
         Letter Accuracy:
-        {(endOfGame && (letterAccActual * 100).toFixed(0)) || 'XX'}
+        {(endOfGame && ` ${letterAccActual}`) || ' XX'}
       </p>
     </ScoreBoardContainer>
   );
